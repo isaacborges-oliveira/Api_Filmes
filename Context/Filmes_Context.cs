@@ -18,7 +18,7 @@ namespace api_filmes_senai.Context
         /// Define que as classes se transformarao em tabelas no BD
         /// </summary>
         public DbSet<Genero> Genero { get; set; }
-        public DbSet<Genero> Filme { get; set; }
+        public DbSet<Filme> Filme { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

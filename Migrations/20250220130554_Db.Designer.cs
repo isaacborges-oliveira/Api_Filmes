@@ -12,8 +12,8 @@ using api_filmes_senai.Context;
 namespace api_filmes_senai.Migrations
 {
     [DbContext(typeof(Filmes_Context))]
-    [Migration("20250218185600_Db_filmes")]
-    partial class Db_filmes
+    [Migration("20250220130554_Db")]
+    partial class Db
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,26 @@ namespace api_filmes_senai.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("api_filmes_senai.Domains.Filme", b =>
+                {
+                    b.Property<Guid>("IdFilmes")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdGenero")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR (50)");
+
+                    b.HasKey("IdFilmes");
+
+                    b.HasIndex("IdGenero");
+
+                    b.ToTable("Filme");
+                });
 
             modelBuilder.Entity("api_filmes_senai.Domains.Genero", b =>
                 {
@@ -38,6 +58,17 @@ namespace api_filmes_senai.Migrations
                     b.HasKey("IdGenero");
 
                     b.ToTable("Genero");
+                });
+
+            modelBuilder.Entity("api_filmes_senai.Domains.Filme", b =>
+                {
+                    b.HasOne("api_filmes_senai.Domains.Genero", "Genero")
+                        .WithMany()
+                        .HasForeignKey("IdGenero")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Genero");
                 });
 #pragma warning restore 612, 618
         }

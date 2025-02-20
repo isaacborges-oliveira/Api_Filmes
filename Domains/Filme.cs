@@ -1,10 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace api_filmes_senai.Domains
 {
-    [Table("Filme")]
-    public class Filmes
+    public class Filme
     {
         [Key]
         public Guid IdFilmes { get; set; }
@@ -12,11 +11,12 @@ namespace api_filmes_senai.Domains
         [Column(TypeName = "VARCHAR (50)")]
         [Required(ErrorMessage = "O titulo do filme é obrigatorio!")]
         public string? Titulo { get; set; }
-     /// <summary>
-     /// Referencia da tabela de Genero
-     /// </summary>
+        /// <summary>
+        /// Referencia da tabela de Genero
+        /// </summary>
         public Guid IdGenero { get; set; }
+
         [ForeignKey("IdGenero")]
-        public Genero? Genero { get; set; } 
+        public Genero? Genero { get; set; }
     }
 }

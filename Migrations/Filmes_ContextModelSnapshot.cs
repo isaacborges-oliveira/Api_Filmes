@@ -22,6 +22,26 @@ namespace api_filmes_senai.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("api_filmes_senai.Domains.Filme", b =>
+                {
+                    b.Property<Guid>("IdFilmes")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdGenero")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR (50)");
+
+                    b.HasKey("IdFilmes");
+
+                    b.HasIndex("IdGenero");
+
+                    b.ToTable("Filme");
+                });
+
             modelBuilder.Entity("api_filmes_senai.Domains.Genero", b =>
                 {
                     b.Property<Guid>("IdGenero")
@@ -35,6 +55,17 @@ namespace api_filmes_senai.Migrations
                     b.HasKey("IdGenero");
 
                     b.ToTable("Genero");
+                });
+
+            modelBuilder.Entity("api_filmes_senai.Domains.Filme", b =>
+                {
+                    b.HasOne("api_filmes_senai.Domains.Genero", "Genero")
+                        .WithMany()
+                        .HasForeignKey("IdGenero")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Genero");
                 });
 #pragma warning restore 612, 618
         }
